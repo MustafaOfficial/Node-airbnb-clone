@@ -1,0 +1,113 @@
+<%- include('../partials/head') %>
+
+    <body class="bg-slate-50 min-h-screen text-slate-800 antialiased">
+        <!-- Header Navigation -->
+        <%- include('../partials/nav') %>
+
+            <!-- Main Content Area -->
+            <main class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+                <!-- Call to Action Banner -->
+                <% if (addedHomes.length===0) { %>
+                    <div
+                        class="bg-white p-6 sm:p-10 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center text-center max-w-xl mx-auto mb-12">
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+                            Register Your Home
+                        </h2>
+                        <p class="text-slate-600 text-sm sm:text-base mb-6 max-w-sm">
+                            Join our community of hosts. Earn extra income and welcome travelers from around the world.
+                        </p>
+                        <a href="/host/add-home"
+                            class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-xl font-semibold text-white bg-rose-600 hover:bg-rose-700 active:scale-95 transition-all duration-150 shadow-md shadow-rose-600/20 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
+                            Add Home
+                        </a>
+                    </div>
+                    <% } %>
+
+
+                        <!-- Registered Homes Section -->
+                        <div>
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-2xl font-bold text-slate-900 tracking-tight">
+                                    Registered Homes
+                                </h3>
+                                <span class="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                                    <%= addedHomes.length %>
+                                        <%= addedHomes.length===1 ? 'Home' : 'Homes' %>
+                                </span>
+                            </div>
+
+                            <% if (addedHomes.length> 0) { %>
+                                <!-- Cards Grid -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <% addedHomes.forEach(home=> { %>
+                                        <div
+                                            class="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col">
+                                            <!-- Image Container -->
+                                            <div class="relative w-full aspect-video bg-slate-100 overflow-hidden">
+                                                <img src="<%= home.photoUrl %>" alt="<%= home.name %>"
+                                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80';">
+                                            </div>
+
+                                            <!-- Card Body -->
+                                            <div class="p-5 flex flex-col flex-grow justify-between">
+                                                <div>
+                                                    <div
+                                                        class="flex items-center gap-1.5 text-xs font-semibold text-rose-600 mb-1.5 uppercase tracking-wider">
+                                                        <!-- Location Pin Icon -->
+                                                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor"
+                                                            viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        </svg>
+                                                        <span class="truncate">
+                                                            <%= home.location %>
+                                                        </span>
+                                                    </div>
+                                                    <h4
+                                                        class="text-lg font-bold text-slate-800 line-clamp-1 group-hover:text-rose-600 transition-colors">
+                                                        <%= home.name %>
+                                                    </h4>
+                                                </div>
+
+                                                <!-- Card Footer: Price -->
+                                                <div class="mt-4 pt-4 border-t border-slate-100 ">
+                                                    <span class="text-xs text-slate-400 font-medium">Price</span>
+                                                    <div class="text-right">
+                                                        <span class="text-xl font-extrabold text-slate-900">$<%=
+                                                                home.price %>
+                                                        </span>
+                                                        <span class="text-xs text-slate-500 font-normal"> /
+                                                            night</span><br>
+                                                        <div class="flex items-center justify-between gap-3 mt-4">
+
+                                                            <%- include('../partials/favoritesButton',{home:home}) %>
+
+                                                                <a class="bg-blue-400 text-white py-2 px-4 rounded-lg"
+                                                                    href="/home/<%= home.id %>">
+                                                                    Details
+                                                                </a>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                </div>
+                                <% } else { %>
+                                    <!-- Empty State -->
+                                    <div
+                                        class="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
+                                        <p class="text-slate-500 font-medium">No homes registered yet.</p>
+                                    </div>
+                                    <% } %>
+                        </div>
+            </main>
+    </body>
+
+    </html>
