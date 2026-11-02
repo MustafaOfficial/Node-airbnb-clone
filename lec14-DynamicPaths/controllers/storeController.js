@@ -22,11 +22,22 @@ exports.getHome = (req, res, next) => {
 };
 
 exports.getFavourites = (req, res) => {
-  Home.fetchAll((addedHomes) => {
-    res.render("store/favourites", {
-      addedHomes: addedHomes,
-      title: "favourites",
-      currentPage: "favourites",
+  let favouriteHomes = [];
+  Favourite.getFavourites((favourites) => {
+    console.log("FAv Homes: ", favourites);
+
+    Home.fetchAll((addedHomes) => {
+      console.log("All Homes: ", addedHomes);
+
+      favouriteHomes = addedHomes.filter((home) => {
+        return favourites.includes(home.id);
+      });
+      console.log(favouriteHomes);
+      res.render("store/favourites", {
+        favouriteHomes: favouriteHomes,
+        title: "favourites",
+        currentPage: "favourites",
+      });
     });
   });
 };
@@ -70,3 +81,29 @@ exports.getHomeDetail = (req, res, next) => {
     }
   });
 };
+
+// exports.getFavourites = (req, res) => {
+//   let favouriteHomes = [];
+//   Favourite.getFavourites((favourites) => {
+//     console.log("FAv Homes: ", favourites);
+
+//     Home.fetchAll((addedHomes) => {
+//       console.log("All Homes: ", addedHomes);
+
+//       addedHomes.forEach((home) => {
+//         favourites.forEach((favHomeId) => {
+//           if (home.id == favHomeId) {
+//             favouriteHomes.push(home);
+//             console.log("favouriteHomes INside inner map:", favouriteHomes);
+//           }
+//         });
+//       });
+//       console.log(favouriteHomes);
+//       res.render("store/favourites", {
+//         favouriteHomes: favouriteHomes,
+//         title: "favourites",
+//         currentPage: "favourites",
+//       });
+//     });
+//   });
+// };
