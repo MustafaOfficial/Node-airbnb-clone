@@ -6,8 +6,6 @@ const rootDir = require("../utils/rootPathUtil");
 // let addedHomes = [];
 
 class Home {
-  id = Math.random();
-
   constructor(name, price, location, rating, photoUrl) {
     this.name = name;
     this.price = price;
@@ -26,7 +24,14 @@ class Home {
 
   save() {
     Home.fetchAll((addedHomes) => {
-      addedHomes.push(this);
+      if (this.id) {
+        addedHomes = addedHomes.map((home) =>
+          this.id === home.id ? this : home,
+        );
+      } else {
+        this.id = Math.random().toString();
+        addedHomes.push(this);
+      }
       const filePath = path.join(rootDir, "data", "homes.json");
       fs.writeFile(filePath, JSON.stringify(addedHomes), (error) => {
         console.log("FIle writing complete", error);
