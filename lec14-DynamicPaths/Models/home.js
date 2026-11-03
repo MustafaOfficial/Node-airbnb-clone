@@ -4,6 +4,7 @@ const rootDir = require("../utils/rootPathUtil");
 
 //fake database
 // let addedHomes = [];
+const filePath = path.join(rootDir, "data", "homes.json");
 
 class Home {
   constructor(name, price, location, rating, photoUrl) {
@@ -15,7 +16,6 @@ class Home {
   }
 
   static fetchAll(callback) {
-    const filePath = path.join(rootDir, "data", "homes.json");
     fs.readFile(filePath, (error, data) => {
       console.log("File reading complete", error);
       callback(!error ? JSON.parse(data) : []);
@@ -32,7 +32,6 @@ class Home {
         this.id = Math.random().toString();
         addedHomes.push(this);
       }
-      const filePath = path.join(rootDir, "data", "homes.json");
       fs.writeFile(filePath, JSON.stringify(addedHomes), (error) => {
         console.log("FIle writing complete", error);
       });
@@ -45,6 +44,18 @@ class Home {
         (home) => String(home.id) === String(homeId),
       );
       callback(homeFound);
+    });
+  }
+
+  static deleteHomeById(homeId, callback) {
+    Home.fetchAll((homes) => {
+      homes = homes.filter((home) => {
+        return String(home.id) !== String(homeId);
+      });
+      fs.writeFile(filePath, JSON.stringify(homes), (error) => {
+        console.log("File writing complete", error);
+      });
+      callback();
     });
   }
 }
