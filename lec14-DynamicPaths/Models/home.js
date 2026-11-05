@@ -17,7 +17,7 @@ class Home {
 
   static fetchAll(callback) {
     fs.readFile(filePath, (error, data) => {
-      console.log("File reading complete", error);
+      console.log("Home.json reading complete", error);
       callback(!error ? JSON.parse(data) : []);
     });
   }
@@ -33,12 +33,15 @@ class Home {
         addedHomes.push(this);
       }
       fs.writeFile(filePath, JSON.stringify(addedHomes), (error) => {
-        console.log("FIle writing complete", error);
+        console.log("Home.json writing complete aftere save()", error);
       });
     });
   }
-
-  static findHomeById(homeId, callback) {
+  //Passing default callback i
+  // err && console.log(err) uses short-circuit evaluation:
+  // If err is null (success), null && ... stops right there, so nothing is logged. (null is falsy, so null && console.log(err) stops at null and never calls console.log.)
+  // If err is an Error object (failure), it’s truthy, so the right side runs and logs it.
+  static findHomeById(homeId, callback = (err) => err && console.log(err)) {
     this.fetchAll((homes) => {
       const homeFound = homes.find(
         (home) => String(home.id) === String(homeId),
@@ -52,10 +55,7 @@ class Home {
       homes = homes.filter((home) => {
         return String(home.id) !== String(homeId);
       });
-      fs.writeFile(filePath, JSON.stringify(homes), (error) => {
-        console.log("File writing complete", error);
-      });
-      callback();
+      fs.writeFile(filePath, JSON.stringify(homes), (callback = () => {}));
     });
   }
 }

@@ -21,26 +21,28 @@ exports.getHome = (req, res, next) => {
   });
 };
 
-exports.getFavourites = (req, res) => {
-  let favouriteHomes = [];
-  Favourite.getFavourites((favourites) => {
-    console.log("FAv Homes: ", favourites);
+// exports.getFavourites = (req, res) => {
+//   console.log("geFavourites() CAlled");
 
-    Home.fetchAll((addedHomes) => {
-      console.log("All Homes: ", addedHomes);
+//   let favouriteHomes = [];
+//   Favourite.getFavourites((favourites) => {
+//     console.log("FAv Homes: ", favourites);
 
-      favouriteHomes = addedHomes.filter((home) => {
-        return favourites.includes(home.id);
-      });
-      console.log(favouriteHomes);
-      res.render("store/favourites", {
-        favouriteHomes: favouriteHomes,
-        title: "favourites",
-        currentPage: "favourites",
-      });
-    });
-  });
-};
+//     Home.fetchAll((addedHomes) => {
+//       console.log("All Homes: ", addedHomes);
+
+//       favouriteHomes = addedHomes.filter((home) => {
+//         return favourites.includes(home.id);
+//       });
+//       console.log(favouriteHomes);
+//       res.render("store/favourites", {
+//         favouriteHomes: favouriteHomes,
+//         title: "favourites",
+//         currentPage: "favourites",
+//       });
+//     });
+//   });
+// };
 
 exports.postAddToFavourites = (req, res) => {
   const homeId = req.body.id;
@@ -82,28 +84,41 @@ exports.getHomeDetail = (req, res, next) => {
   });
 };
 
-// exports.getFavourites = (req, res) => {
-//   let favouriteHomes = [];
-//   Favourite.getFavourites((favourites) => {
-//     console.log("FAv Homes: ", favourites);
+exports.getFavourites = (req, res) => {
+  let favouriteHomes = [];
+  Favourite.getFavourites((favourites) => {
+    // console.log("FAv Homes: ", favourites);
 
-//     Home.fetchAll((addedHomes) => {
-//       console.log("All Homes: ", addedHomes);
+    Home.fetchAll((addedHomes) => {
+      // console.log("All Homes: ", addedHomes);
 
-//       addedHomes.forEach((home) => {
-//         favourites.forEach((favHomeId) => {
-//           if (home.id == favHomeId) {
-//             favouriteHomes.push(home);
-//             console.log("favouriteHomes INside inner map:", favouriteHomes);
-//           }
-//         });
-//       });
-//       console.log(favouriteHomes);
-//       res.render("store/favourites", {
-//         favouriteHomes: favouriteHomes,
-//         title: "favourites",
-//         currentPage: "favourites",
-//       });
-//     });
-//   });
-// };
+      addedHomes.forEach((home) => {
+        favourites.forEach((favHomeId) => {
+          if (home.id == favHomeId) {
+            favouriteHomes.push(home);
+            // console.log("favouriteHomes INside inner map:", favouriteHomes);
+          }
+        });
+      });
+      // console.log(favouriteHomes);
+      res.render("store/favourites", {
+        favouriteHomes: favouriteHomes,
+        title: "favourites",
+        currentPage: "favourites",
+      });
+    });
+  });
+};
+
+exports.postRemoveFromFavorites = (req, res, next) => {
+  console.log(" postRemoveFromFavorites() called");
+
+  const homeId = req.params.homeId;
+
+  Favourite.removeFromFavoritesById(homeId, (err) => {
+    if (err) {
+      console.log("error removing home from favourites");
+      res.redirect("/favourites");
+    }
+  });
+};

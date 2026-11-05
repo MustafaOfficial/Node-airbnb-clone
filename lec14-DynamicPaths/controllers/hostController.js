@@ -1,3 +1,4 @@
+const { Favourite } = require("../Models/favourite");
 const { Home } = require("../Models/home");
 const { addedHomes } = require("../Models/home");
 
@@ -14,7 +15,7 @@ exports.getHostHomeList = (req, res, next) => {
     res.render("host/host-home-list", {
       addedHomes: addedHomes,
       title: "BNB HOME",
-      currentPage: "home",
+      currentPage: "host-home-list",
     });
   });
 };
@@ -24,7 +25,12 @@ exports.postDeleteHome = (req, res, next) => {
   Home.deleteHomeById(homeId, (error) => {
     console.log("Error while deleting: ", error);
   });
-  res.redirect("/host/host-home-list");
+  Favourite.removeFromFavoritesById(homeId, (err) => {
+    if (err) {
+      console.log("Error While removing from favourites", err);
+    }
+    res.redirect("/host/host-home-list");
+  });
 };
 
 // const addedHomes = [];
@@ -51,8 +57,6 @@ exports.postEditHome = (req, res, next) => {
   home.save();
 
   res.redirect("/host/host-home-list");
-  console.log(req.body);
-  console.log(addedHomes);
 };
 
 exports.getEditHome = (req, res, next) => {

@@ -82,6 +82,10 @@
                                                                 home.price %>
                                                         </span>
                                                         <span class="text-xs text-slate-500 font-normal"> / night</span>
+                                                        <form action="/favourites/<%= home.id%>" method="post">
+                                                            <button type="submit"
+                                                                class="bg-red-500 px-3 py-3">Remove</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,7 +96,7 @@
                                     <!-- Empty State -->
                                     <div
                                         class="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-200">
-                                        <p class="text-slate-500 font-medium">No homes registered yet.</p>
+                                        <p class="text-slate-500 font-medium">No homes marked as favourite yet.</p>
                                     </div>
                                     <% } %>
                         </div>

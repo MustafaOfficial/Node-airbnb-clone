@@ -19,8 +19,33 @@ class Favourite {
 
   static getFavourites(callback) {
     fs.readFile(filePath, (error, data) => {
-      console.log("File reading complete", error);
+      console.log("Favourites.json reading complete", error);
       callback(!error ? JSON.parse(data) : []);
+    });
+  }
+
+  // static removeFromFavoritesById(homeId) {
+  //   console.log(" Favourite.removeFromFavoritesById() called");
+  //   Favourite.getFavourites((favourites) => {
+  //     const updatedFavourites = favourites.filter((favoriteHomeId) => {
+  //       return homeId != favoriteHomeId;
+  //     });
+  //     fs.writeFile(filePath, JSON.stringify(updatedFavourites), (err) => {
+  //       if (err) {
+  //         console.log(err);
+  //         return;
+  //       }
+  //     });
+  //   });
+  // }
+
+  static removeFromFavoritesById(homeId, callback) {
+    Favourite.getFavourites((favourites) => {
+      const updatedFavourites = favourites.filter((favoriteHomeId) => {
+        return homeId != favoriteHomeId;
+      });
+
+      fs.writeFile(filePath, JSON.stringify(updatedFavourites), callback);
     });
   }
 }
