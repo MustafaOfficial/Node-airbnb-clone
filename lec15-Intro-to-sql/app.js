@@ -9,11 +9,7 @@ const storeRouter = require("./routes/storeRouter");
 const { hostRouter } = require("./routes/hostRouter");
 const { notFoundRouter } = require("./routes/notFoundRouter");
 const rootPath = require("./utils/rootPathUtil");
-const db = require("./utils/db");
-
-db.execute("select * from homes")
-  .then(([data, fields]) => console.log(data))
-  .catch((error) => console.log("Error while reading from db", error));
+// const db = require("./utils/db");
 
 const app = express();
 
