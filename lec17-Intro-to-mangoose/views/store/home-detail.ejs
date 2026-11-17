@@ -1,0 +1,102 @@
+<%- include('../partials/head') %>
+
+    <body class="bg-slate-100 h-screen overflow-hidden text-slate-800 antialiased flex flex-col">
+        <%- include('../partials/nav') %>
+
+            <!-- Detail View — fills remaining viewport with margin -->
+            <main class="flex-1 px-4 py-9 sm:px-6 sm:py-11 lg:px-8 lg:py-12 overflow-hidden">
+                <div
+                    class="bg-white rounded-2xl shadow-sm border border-slate-200 h-full flex flex-col lg:flex-row overflow-hidden">
+
+                    <!-- Left: Image Panel -->
+                    <div
+                        class="relative w-full lg:w-1/2 h-44 sm:h-56 lg:h-full bg-slate-100 overflow-hidden shrink-0 group">
+                        <img src="<%= home.photoUrl %>" alt="<%= home.name %>"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80';">
+                        <!-- Back button overlay -->
+                        <a href="/home"
+                            class="absolute top-4 left-4 inline-flex items-center gap-1.5 text-sm font-medium text-white bg-black/40 hover:bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Back
+                        </a>
+                        <!-- Price badge overlay -->
+                        <div
+                            class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
+                            <span class="text-xl font-extrabold text-slate-900">$<%= home.price %></span>
+                            <span class="text-sm text-slate-500"> / night</span>
+                        </div>
+                    </div>
+
+                    <!-- Right: Info Panel -->
+                    <div class="flex-1 flex flex-col justify-between p-6 sm:p-8 lg:p-10 overflow-hidden">
+
+                        <!-- Top: Title & Description -->
+                        <div class="space-y-4">
+                            <!-- Location & House No -->
+                            <div class="flex items-center justify-between flex-wrap gap-3">
+                                <div
+                                    class="flex items-center gap-1.5 text-sm font-semibold text-rose-600 uppercase tracking-wider">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <%= home.location %>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">
+                                    House No : <%= homeId %>
+                                </span>
+                            </div>
+
+                            <!-- Title -->
+                            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                                <%= home.name %>
+                            </h1>
+
+                            <!-- Description -->
+                            <% if (home.description) { %>
+                                <p
+                                    class="text-sm sm:text-base text-slate-600 leading-relaxed line-clamp-4 lg:line-clamp-6">
+                                    <%= home.description %>
+                                </p>
+                                <% } %>
+
+                                    <!-- Info chips -->
+                                    <div class="flex flex-wrap gap-3 pt-2">
+                                        <div
+                                            class="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2 border border-slate-100">
+                                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                                stroke-width="2" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                                            </svg>
+                                            <span class="text-sm font-bold text-slate-800">$<%= home.price %> <span
+                                                        class="font-normal text-slate-500">/ night</span></span>
+                                        </div>
+                                    </div>
+                        </div>
+
+                        <!-- Bottom: Action Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100 mt-4">
+                            <%- include('../partials/favoritesButton', { home: home }) %>
+
+                                <a href="/reserve/<%= home._id %>"
+                                    class="flex-1 inline-flex items-center justify-center gap-2 text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 active:scale-95 py-3 px-4 rounded-lg transition-all duration-150 shadow-md shadow-rose-600/20">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    Reserve Now
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+    </body>
+
+    </html>

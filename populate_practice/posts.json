@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "6afb241ca8b3a526e23e9135",
+    "title": "Hello",
+    "body": "Ali's post",
+    "author": { "name": "Ali", "email": "ali@example.com" },
+    "__v": 0
+  },
+  {
+    "_id": "6afb244ea8b3a526e23e9136",
+    "title": "Hi There!",
+    "body": "Mustafa's post",
+    "author": { "name": "Mustafa", "email": "mustafa@example.com" },
+    "__v": 0
+  },
+  {
+    "_id": "6afb24a1a8b3a526e23e9137",
+    "title": "Mustafa's 2nd Post ",
+    "body": "Helloeveryone how are you doing",
+    "author": { "name": "Mustafa", "email": "mustafa@example.com" },
+    "__v": 0
+  }
+]
