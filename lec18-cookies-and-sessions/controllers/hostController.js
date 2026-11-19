@@ -7,7 +7,6 @@ exports.getAddHome = (req, res, next) => {
     title: "Add Home",
     currentPage: "addHome",
     editing: false,
-    isLoggedIn: req.cookies.isLoggedIn,
   });
 };
 
@@ -17,7 +16,6 @@ exports.getHostHomeList = (req, res, next) => {
       addedHomes: homes,
       title: "BNB HOME",
       currentPage: "host-home-list",
-      isLoggedIn: req.cookies.isLoggedIn,
     });
   });
 };
@@ -50,7 +48,6 @@ exports.postAddHome = (req, res, next) => {
     addedHome: req.body,
     title: "Home Added",
     currentPage: "homeAdded",
-    isLoggedIn: req.cookies.isLoggedIn,
   });
   console.log(req.body);
   console.log(addedHomes);
@@ -92,7 +89,6 @@ exports.getEditHome = (req, res, next) => {
       home: home,
       title: "Edit Home",
       currentPage: "edit-home",
-      isLoggedIn: req.cookies.isLoggedIn,
     });
     console.log(req.body);
     console.log(addedHomes);

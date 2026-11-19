@@ -6,18 +6,15 @@ exports.getIndex = (req, res, next) => {
     addedHomes: {},
     title: "index",
     currentPage: "index",
-    isLoggedIn: req.cookies.isLoggedIn,
   });
 };
 
 exports.getHome = (req, res, next) => {
   Home.find().then((homes) => {
-    console.log("In getHome - req.isloggedIn = ", req.cookies.isLoggedIn);
     res.render("store/home-list", {
       addedHomes: homes,
       title: "BNB HOME",
       currentPage: "home",
-      isLoggedIn: req.cookies.isLoggedIn,
     });
   });
 };
@@ -45,7 +42,6 @@ exports.getBookings = (req, res) => {
       addedHomes: homes,
       title: "Bookings",
       currentPage: "bookings",
-      isLoggedIn: req.cookies.isLoggedIn,
     });
   });
 };
@@ -63,7 +59,6 @@ exports.getHomeDetail = (req, res, next) => {
         homeId,
         title: "Home Detail",
         currentPage: "home",
-        isLoggedIn: req.cookies.isLoggedIn,
       });
     }
   });
@@ -77,7 +72,6 @@ exports.getFavourites = async (req, res) => {
     favouriteHomes: favouriteHomes,
     title: "favourites",
     currentPage: "favourites",
-    isLoggedIn: req.cookies.isLoggedIn,
   });
 
   // then((favourites) => {

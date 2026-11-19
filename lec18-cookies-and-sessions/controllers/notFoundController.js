@@ -4,6 +4,5 @@ exports.notFound = (req, res, next) => {
   res.render("error404", {
     title: "Error 404",
     currentPage: "error404",
-    isLoggedIn: req.cookies.isLoggedIn,
   });
 };
